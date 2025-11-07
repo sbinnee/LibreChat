@@ -32,7 +32,7 @@ services:
       - ./logs:/app/logs
   mongodb:
     container_name: chat-mongodb
-    image: mongo:8.0.17
+    image: mongodb-raspberrypi4-unofficial-r7.0.4
     restart: always
     user: "${UID}:${GID}"
     volumes:

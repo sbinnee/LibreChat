@@ -39,7 +39,6 @@ endpoints:
 interface:
   modelSelect: true
   parameters: true
-  presets: true
 
 # endpoint: openAI, azureOpenAI, google, anthropic, assistants, azureAssistants, bedrock
 modelSpecs:

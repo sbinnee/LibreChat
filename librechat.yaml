@@ -68,6 +68,13 @@ modelSpecs:
       preset:
         endpoint: "openAI"
         model: "gpt-5.2-chat-latest"
+    - name: "openrouter/gemini-3-flash-preview"
+      label: "Gemini-3-Flash-Preview (OpenRouter)"
+      default: false
+      iconURL: "google"
+      preset:
+        endpoint: "OpenRouter"
+        model: "google/gemini-3-flash-preview"
     - name: "openrouter/gemini-2.5-flash"
       label: "Gemini-2.5-Flash (OpenRouter)"
       default: false

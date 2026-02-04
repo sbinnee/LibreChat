@@ -67,6 +67,9 @@ modelSpecs:
       preset:
         endpoint: "openAI"
         model: "gpt-5.2-chat-latest"
+    # OpenRouter
+    # Set `preset.modelLabel` to change model names in the UI. Otherwise, it
+    # will appear as "OpenRouter".
     - name: "openrouter/gemini-3-flash-preview"
       label: "Gemini-3-Flash-Preview (OpenRouter)"
       default: false
@@ -74,6 +77,7 @@ modelSpecs:
       preset:
         endpoint: "OpenRouter"
         model: "google/gemini-3-flash-preview"
+        modelLabel: "Gemini"
     - name: "openrouter/gemini-2.5-flash"
       label: "Gemini-2.5-Flash (OpenRouter)"
       default: false
@@ -81,3 +85,4 @@ modelSpecs:
       preset:
         endpoint: "OpenRouter"
         model: "google/gemini-2.5-flash"
+        modelLabel: "Gemini"

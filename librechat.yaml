@@ -43,12 +43,12 @@ interface:
 # endpoint: openAI, azureOpenAI, google, anthropic, assistants, azureAssistants, bedrock
 modelSpecs:
   list:
-    - name: "anthropic/claude-sonnet-4-5-20250929"
-      label: "Claude Sonnet 4.5"
+    - name: "anthropic/claude-sonnet-4-6"
+      label: "Claude Sonnet 4.6"
       default: false
       preset:
         endpoint: "anthropic"
-        model: "claude-sonnet-4-5-20250929"
+        model: "claude-sonnet-4-6"
     - name: "anthropic/claude-haiku-4-5-20251001"
       label: "Claude Haiku 4.5"
       default: false
@@ -72,7 +72,7 @@ modelSpecs:
     # will appear as "OpenRouter".
     - name: "openrouter/gemini-3-flash-preview"
       label: "Gemini-3-Flash-Preview (OpenRouter)"
-      default: false
+      default: true
       iconURL: "google"
       preset:
         endpoint: "OpenRouter"
@@ -86,3 +86,11 @@ modelSpecs:
         endpoint: "OpenRouter"
         model: "google/gemini-2.5-flash"
         modelLabel: "Gemini"
+    - name: "openrouter/mistral-large-2512"
+      label: "Mistral Large 3 2512"
+      default: false
+      iconURL: "Mistral"
+      preset:
+        endpoint: "OpenRouter"
+        model: "mistralai/mistral-large-2512"
+        modelLabel: "Mistral"

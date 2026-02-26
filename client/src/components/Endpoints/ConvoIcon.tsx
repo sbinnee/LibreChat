@@ -47,7 +47,7 @@ export default function ConvoIcon({
 
   const endpointIconURL = getEndpointField(endpointsConfig, endpoint, 'iconURL');
   const iconKey = getIconKey({ endpoint, endpointsConfig, endpointIconURL });
-  const Icon = icons[iconKey] ?? null;
+  const Icon = icons[iconKey] ?? icons.unknown;
 
   return (
     <>
@@ -64,18 +64,16 @@ export default function ConvoIcon({
         />
       ) : (
         <div className={containerClassName}>
-          {endpoint && Icon != null && (
-            <Icon
-              size={size}
-              context={context}
-              endpoint={endpoint}
-              className={className}
-              iconURL={endpointIconURL}
-              assistantName={name}
-              agentName={name}
-              avatar={avatar}
-            />
-          )}
+          <Icon
+            size={size}
+            context={context}
+            endpoint={endpoint ?? ''}
+            className={className}
+            iconURL={endpointIconURL}
+            assistantName={name}
+            agentName={name}
+            avatar={avatar}
+          />
         </div>
       )}
     </>

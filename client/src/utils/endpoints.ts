@@ -1,6 +1,7 @@
 import {
   Constants,
   EModelEndpoint,
+  KnownEndpoints,
   defaultEndpoints,
   modularEndpoints,
   LocalStorageKeys,
@@ -332,6 +333,15 @@ export function getIconEndpoint({
   iconURL?: string | null;
   endpoint?: string | null;
 }) {
+  const normalizedIconURL = iconURL?.toLowerCase();
+  if (
+    normalizedIconURL != null &&
+    normalizedIconURL !== '' &&
+    Object.values(KnownEndpoints).includes(normalizedIconURL as KnownEndpoints)
+  ) {
+    return normalizedIconURL;
+  }
+
   return (endpointsConfig?.[iconURL ?? ''] ? (iconURL ?? endpoint) : endpoint) ?? '';
 }
 

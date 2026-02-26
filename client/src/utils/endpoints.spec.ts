@@ -1,6 +1,11 @@
 import { EModelEndpoint, getEndpointField } from 'librechat-data-provider';
 import type { TEndpointsConfig, TConfig } from 'librechat-data-provider';
-import { getAvailableEndpoints, getEndpointsFilter, mapEndpoints } from './endpoints';
+import {
+  getAvailableEndpoints,
+  getEndpointsFilter,
+  getIconEndpoint,
+  mapEndpoints,
+} from './endpoints';
 
 const mockEndpointsConfig: TEndpointsConfig = {
   [EModelEndpoint.openAI]: { type: undefined, iconURL: 'openAI_icon.png', order: 0 },
@@ -81,5 +86,41 @@ describe('mapEndpoints', () => {
   it('returns sorted available endpoints', () => {
     const expectedOrder = [EModelEndpoint.openAI, EModelEndpoint.google, 'Mistral'];
     expect(mapEndpoints(mockEndpointsConfig)).toEqual(expectedOrder);
+  });
+});
+
+describe('getIconEndpoint', () => {
+  it('uses known endpoint value from iconURL, case-insensitively', () => {
+    expect(
+      getIconEndpoint({
+        endpointsConfig: mockEndpointsConfig,
+        iconURL: 'Mistral',
+        endpoint: 'OpenRouter',
+      }),
+    ).toBe('mistral');
+  });
+
+  it('uses named endpoint key from config when iconURL matches config endpoint', () => {
+    const endpointsConfig: TEndpointsConfig = {
+      CustomProvider: { type: EModelEndpoint.custom, iconURL: 'custom_icon.png', order: 0 },
+    };
+
+    expect(
+      getIconEndpoint({
+        endpointsConfig,
+        iconURL: 'CustomProvider',
+        endpoint: EModelEndpoint.openAI,
+      }),
+    ).toBe('CustomProvider');
+  });
+
+  it('falls back to endpoint when iconURL is not a known endpoint or config key', () => {
+    expect(
+      getIconEndpoint({
+        endpointsConfig: mockEndpointsConfig,
+        iconURL: 'not-a-provider',
+        endpoint: EModelEndpoint.openAI,
+      }),
+    ).toBe(EModelEndpoint.openAI);
   });
 });

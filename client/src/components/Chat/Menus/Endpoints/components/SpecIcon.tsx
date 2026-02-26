@@ -19,9 +19,18 @@ const SpecIcon: React.FC<SpecIconProps> = ({ currentSpec, endpointsConfig }) => 
   const endpointIconURL = getEndpointField(endpointsConfig, endpoint, 'iconURL');
   const iconKey = getIconKey({ endpoint, endpointsConfig, endpointIconURL });
   let Icon: IconType;
+  let iconEndpoint = endpoint;
+  let iconSrc = endpointIconURL;
 
   if (!iconURL.includes('http')) {
-    Icon = (icons[iconURL] ?? icons[iconKey] ?? icons.unknown) as IconType;
+    const directMatch = icons[iconURL];
+    const endpointMatch = iconKey === 'unknown' ? undefined : icons[iconKey];
+    const matched = directMatch ?? endpointMatch;
+    Icon = (matched ?? icons.unknown) as IconType;
+    if (!matched && iconURL) {
+      iconEndpoint = iconURL;
+      iconSrc = '';
+    }
   } else if (iconURL) {
     return (
       <URLIcon
@@ -39,9 +48,9 @@ const SpecIcon: React.FC<SpecIconProps> = ({ currentSpec, endpointsConfig }) => 
   return (
     <Icon
       size={20}
-      endpoint={endpoint}
+      endpoint={iconEndpoint}
       context="menu-item"
-      iconURL={endpointIconURL}
+      iconURL={iconSrc}
       className="icon-md shrink-0 text-text-primary"
     />
   );

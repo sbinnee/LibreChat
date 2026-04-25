@@ -82,6 +82,15 @@ modelSpecs:
         endpoint: "OpenRouter"
         model: "google/gemini-3-flash-preview"
         modelLabel: "Gemini"
+    - name: "openrouter/deepseek-v4-flash"
+      label: "DeepSeek V4 Flash"
+      default: true
+      iconURL: "deepseek"
+      preset:
+        endpoint: "OpenRouter"
+        model: "deepseek/deepseek-v4-flash"
+        modelLabel: "Deepseek"
+        modelDisplayLabel: "Deepseek"
     - name: "openrouter/gemini-2.5-flash"
       label: "Gemini-2.5-Flash (OpenRouter)"
       default: false

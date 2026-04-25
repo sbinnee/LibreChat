@@ -98,3 +98,19 @@ modelSpecs:
         endpoint: "OpenRouter"
         model: "mistralai/mistral-large-2512"
         modelLabel: "Mistral"
+speech:
+  tts:
+    elevenlabs:
+      apiKey: "${ELEVENLABS_API_KEY}"
+      model: "eleven_flash_v2_5"
+      # Wili, Lily
+      voices: ["bIHbv24MWmeRgasZH58o", "pFZP5JQG7iQjIQuC4Bku"]
+  stt:
+    openai:
+      apiKey: "${OPENAI_API_KEY}"
+      model: "whisper-1"
+  speechTab:
+    conversationMode: true
+    advancedMode: true
+    speechToText: true
+    textToSpeech: true

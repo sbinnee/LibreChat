@@ -85,7 +85,7 @@ modelSpecs:
     - name: "openrouter/deepseek-v4-flash"
       label: "DeepSeek V4 Flash"
       default: true
-      iconURL: "deepseek"
+      iconURL: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Deepseek-logo-icon.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
       preset:
         endpoint: "OpenRouter"
         model: "deepseek/deepseek-v4-flash"

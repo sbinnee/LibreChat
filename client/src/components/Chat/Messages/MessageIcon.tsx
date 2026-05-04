@@ -83,7 +83,7 @@ const MessageIcon = memo(({ iconData, assistant, agent }: MessageIconProps) => {
     <Icon
       isCreatedByUser={iconData?.isCreatedByUser ?? false}
       endpoint={endpoint}
-      iconURL={avatarURL || endpointIconURL}
+      iconURL={avatarURL || iconURL || endpointIconURL}
       model={iconData?.model}
       assistantName={assistantName}
       agentName={agentName}

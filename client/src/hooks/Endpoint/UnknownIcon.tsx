@@ -78,6 +78,20 @@ function UnknownIcon({
   }
 
   if (iconURL) {
+    const referencedAsset = knownEndpointAssets[iconURL.toLowerCase()];
+    if (referencedAsset) {
+      return (
+        <img
+          className={getKnownClass({
+            currentEndpoint: iconURL.toLowerCase(),
+            context,
+            className,
+          })}
+          src={referencedAsset}
+          alt={`${iconURL} Icon`}
+        />
+      );
+    }
     return <img className={className} src={iconURL} alt={`${endpoint} Icon`} />;
   }
 

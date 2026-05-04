@@ -70,7 +70,7 @@ export default function ConvoIcon({
               context={context}
               endpoint={endpoint}
               className={className}
-              iconURL={endpointIconURL}
+              iconURL={iconURL || endpointIconURL}
               assistantName={name}
               agentName={name}
               avatar={avatar}

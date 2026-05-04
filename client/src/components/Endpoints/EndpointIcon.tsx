@@ -54,7 +54,7 @@ export default function EndpointIcon({
     return (
       <MinimalIcon
         size={20}
-        iconURL={endpointIconURL}
+        iconURL={iconURL || endpointIconURL}
         endpoint={endpoint}
         endpointType={endpointType}
         model={conversation?.model}

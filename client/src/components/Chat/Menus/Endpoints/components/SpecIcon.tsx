@@ -4,6 +4,7 @@ import type { TModelSpec, TEndpointsConfig } from 'librechat-data-provider';
 import type { IconMapProps } from '~/common';
 import { getModelSpecIconURL, getIconKey } from '~/utils';
 import { URLIcon } from '~/components/Endpoints/URLIcon';
+import UnknownIcon from '~/hooks/Endpoint/UnknownIcon';
 import { icons } from '~/hooks/Endpoint/Icons';
 
 interface SpecIconProps {
@@ -21,6 +22,15 @@ const SpecIcon: React.FC<SpecIconProps> = ({ currentSpec, endpointsConfig }) => 
   let Icon: IconType;
 
   if (!iconURL.includes('http')) {
+    if (iconURL && !icons[iconURL]) {
+      return (
+        <UnknownIcon
+          endpoint={iconURL}
+          context="menu-item"
+          className="icon-md shrink-0 text-text-primary"
+        />
+      );
+    }
     Icon = (icons[iconURL] ?? icons[iconKey] ?? icons.unknown) as IconType;
   } else if (iconURL) {
     return (

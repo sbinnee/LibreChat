@@ -1,16 +1,23 @@
 # For more information, see the Configuration Guide:
 # https://www.librechat.ai/docs/configuration/librechat_yaml
-version: 1.3.9
 
-# Cache settings: Set to true to enable caching
+# Configuration version (required)
+version: 1.3.19
+
+# Cache settings: Set to true to enable caching.
+# Optional role caching is configured under `roleCache`; see librechat.example.yaml
+# before enabling it across replicas.
 cache: true
 
 # Definition of custom endpoints
 endpoints:
+  # Title settings under `all` apply to every endpoint one field at a time: a field set
+  # here wins over the endpoint's own value, and a field left out keeps it.
+  # `titleEndpoint` and `titleModel` are one choice, taken together.
   all:
     titleConvo: true
-    titleEndpoint: "xai"
-    titleModel: "grok-4-1-fast-non-reasoning"
+    titleEndpoint: "OpenRouter"
+    titleModel: "deepseek/deepseek-v4.1-flash-1017"
   custom:
     - name: "xai"
       apiKey: "${XAI_API_KEY}"
@@ -25,10 +32,10 @@ endpoints:
       apiKey: "${OPENROUTER_KEY}" # NOT OPENROUTER_API_KEY
       baseURL: "https://openrouter.ai/api/v1"
       models:
-        default: ["google/gemini-2.5-flash"]
+        default: ["google/gemini-3.8-flash"]
         fetch: true
       titleConvo: true
-      titleModel: "google/gemini-2.5-flash"
+      titleModel: "google/gemini-3.8-flash"
       # Recommended: Drop the stop parameter from the request as Openrouter models use a variety of stop tokens.
       dropParams: ["stop"]
       modelDisplayLabel: "OpenRouter"
@@ -44,68 +51,69 @@ interface:
   modelSelect: true
   parameters: true
 
-# endpoint: openAI, azureOpenAI, google, anthropic, assistants, azureAssistants, bedrock
+# Model specs appear in the model selector. `group` nests a spec under an endpoint
+# (or creates a custom group with `groupIcon`); omit it for a top-level item.
+# `default: true` is a hard admin default that outranks prior user choices;
+# `softDefault: true` only applies until the user picks a model, spec, or agent.
+# preset.endpoint accepts a built-in endpoint (openAI, azureOpenAI, google, anthropic,
+# assistants, azureAssistants, agents, bedrock) or a custom endpoint name.
 modelSpecs:
   list:
-    - name: "anthropic/claude-sonnet-4-6"
-      label: "Claude Sonnet 4.6"
-      default: false
-      preset:
-        endpoint: "anthropic"
-        model: "claude-sonnet-4-6"
-    - name: "anthropic/claude-haiku-4-5-20251001"
-      label: "Claude Haiku 4.5"
-      default: false
-      preset:
-        endpoint: "anthropic"
-        model: "claude-haiku-4-5-20251001"
     - name: "xai/grok-4-1-fast-reasoning"
       label: "Grok 4.1 Fast Reasoning"
       default: false
       preset:
         endpoint: "xai"
         model: "grok-4-1-fast-reasoning"
-    - name: "openai/gpt-5.3-chat-latest"
-      label: "GPT-5.3 Chat"
-      default: false
-      preset:
-        endpoint: "openAI"
-        model: "gpt-5.3-chat-latest"
     # OpenRouter
     # Set `preset.modelLabel` to change model names in the UI. Otherwise, it
     # will appear as "OpenRouter".
-    - name: "openrouter/gemini-3-flash-preview"
-      label: "Gemini-3-Flash-Preview (OpenRouter)"
+    - name: "openrouter/gemini-3.8-flash"
+      label: "Gemini-3.8-Flash (OpenRouter)"
       default: false
       iconURL: "google"
       preset:
         endpoint: "OpenRouter"
-        model: "google/gemini-3-flash-preview"
+        model: "google/gemini-3.8-flash"
         modelLabel: "Gemini"
-    - name: "openrouter/deepseek-v4-flash"
-      label: "DeepSeek V4 Flash"
+    - name: "openrouter/deepseek-v4.1-flash-1017"
+      label: "DeepSeek V4.1 Flash"
       default: true
       iconURL: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Deepseek-logo-icon.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
       preset:
         endpoint: "OpenRouter"
-        model: "deepseek/deepseek-v4-flash"
+        model: "deepseek/deepseek-v4.1-flash-1017"
         modelLabel: "Deepseek"
-    - name: "openrouter/gemini-2.5-flash"
-      label: "Gemini-2.5-Flash (OpenRouter)"
-      default: false
-      iconURL: "google"
-      preset:
-        endpoint: "OpenRouter"
-        model: "google/gemini-2.5-flash"
-        modelLabel: "Gemini"
-    - name: "openrouter/mistral-large-2512"
-      label: "Mistral Large 3 2512"
+    - name: "openrouter/mistral-large-4-0"
+      label: "Mistral Large 4"
       default: false
       iconURL: "Mistral"
       preset:
         endpoint: "OpenRouter"
-        model: "mistralai/mistral-large-2512"
+        model: "mistralai/mistral-large-4-0"
         modelLabel: "Mistral"
+    # Out of credits; disabled.
+    # - name: "anthropic/claude-sonnet-4-6"
+    #   label: "Claude Sonnet 4.6"
+    #   default: false
+    #   preset:
+    #     endpoint: "anthropic"
+    #     model: "claude-sonnet-4-6"
+    # - name: "anthropic/claude-haiku-4-5-20251001"
+    #   label: "Claude Haiku 4.5"
+    #   default: false
+    #   preset:
+    #     endpoint: "anthropic"
+    #     model: "claude-haiku-4-5-20251001"
+    # - name: "openai/gpt-5.3-chat-latest"
+    #   label: "GPT-5.3 Chat"
+    #   default: false
+    #   preset:
+    #     endpoint: "openAI"
+    #     model: "gpt-5.3-chat-latest"
+# Speech (STT/TTS) requests to custom `url` targets are SSRF-guarded. To use a
+# private or self-hosted service, add its host:port to `allowedAddresses` on the
+# `tts`/`stt` section; `tts.maxInputChars` caps text per synthesis request.
 speech:
   tts:
     elevenlabs:
@@ -113,12 +121,13 @@ speech:
       model: "eleven_flash_v2_5"
       # Wili, Lily
       voices: ["bIHbv24MWmeRgasZH58o", "pFZP5JQG7iQjIQuC4Bku"]
-  stt:
-    openai:
-      apiKey: "${OPENAI_API_KEY}"
-      model: "whisper-1"
+  # Out of credits; disabled.
+  # stt:
+  #   openai:
+  #     apiKey: "${OPENAI_API_KEY}"
+  #     model: "whisper-1"
   speechTab:
     conversationMode: true
     advancedMode: true
-    speechToText: true
+    speechToText: false
     textToSpeech: true

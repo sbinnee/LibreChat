@@ -19,13 +19,6 @@ endpoints:
     titleEndpoint: "OpenRouter"
     titleModel: "deepseek/deepseek-v4.1-flash-1017"
   custom:
-    - name: "xai"
-      apiKey: "${XAI_API_KEY}"
-      baseURL: "https://api.x.ai/v1"
-      models:
-        default: ["grok-4-fast"]
-        fetch: true
-      modelDisplayLabel: "Grok"
     - name: "OpenRouter"
       # For `apiKey` and `baseURL`, you can use environment variables that you define.
       # recommended environment variables:
@@ -59,12 +52,6 @@ interface:
 # assistants, azureAssistants, agents, bedrock) or a custom endpoint name.
 modelSpecs:
   list:
-    - name: "xai/grok-4-1-fast-reasoning"
-      label: "Grok 4.1 Fast Reasoning"
-      default: false
-      preset:
-        endpoint: "xai"
-        model: "grok-4-1-fast-reasoning"
     # OpenRouter
     # Set `preset.modelLabel` to change model names in the UI. Otherwise, it
     # will appear as "OpenRouter".
